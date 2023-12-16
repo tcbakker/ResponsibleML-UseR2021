@@ -166,8 +166,47 @@ covid_summer <- covid_summer[,c("Gender", "Age", "Cardiovascular.Diseases", "Dia
 ## Your turn
 
 - Plot Age distribution for `covid_spring` and `covid_summer`.
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(covid_spring, aes(Age, fill = Death)) +
+  geom_histogram(color = "white") +
+  ggtitle("Histogram of age (spring)") + 
+  DALEX::theme_ema() +
+  scale_fill_manual("", values = c("grey", "red3"))
+
+ggplot(covid_summer, aes(Age, fill = Death)) +
+  geom_histogram(color = "white") +
+  ggtitle("Histogram of age (summer)") + 
+  DALEX::theme_ema() +
+  scale_fill_manual("", values = c("grey", "red3"))
+
+```
+
+
 - Calculate `tableone` for `covid_spring` and `covid_summer`.
+
+```{r, warning=FALSE, message=FALSE}
+table1_spring <- CreateTableOne(vars = colnames(covid_spring)[1:11],
+                         data = covid_spring,
+                         strata = "Death")
+print("table1_spring")
+print(table1_spring)
+
+table1_summer <- CreateTableOne(vars = colnames(covid_summer)[1:11],
+                         data = covid_summer,
+                         strata = "Death")
+print("table1_summer")
+print(table1_summer)
+```
+
 - (extra) In the `DALEX` package you will find `titanic_imputed` dataset. Calculate `tableone` for this dataset.
+
+```{r, warning=FALSE, message=FALSE}
+table1_titanic <- CreateTableOne(vars = colnames(titanic_imputed)[1:8],
+                         data = titanic_imputed,
+                         strata = "survived")
+print(table1_titanic)
+```
 
 # Part 2: Hello model! First predictive model + How to measure performance
 
